@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Secrets: never commit (.env.example is fine)
+.env
+
+# Local raw data: lives in Azure Blob / gets re-downloaded
+data/
+
+# dbt generated output
+dbt/**/target/
+dbt/**/dbt_packages/
+dbt/**/logs/
+logs/
+
+# Testing
+.pytest_cache/
+
+# Power BI lock files, editor and Windows junk
+~$*
+.vscode/
+Thumbs.db
+desktop.ini
