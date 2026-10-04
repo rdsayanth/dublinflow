@@ -14,3 +14,5 @@ jobs:
           cache: pip                       # reuse downloaded packages between runs
       - run: pip install -r requirements.txt
       - run: python ingestion/collect_gbfs.py
+        env:
+          AZURE_RAW_CONTAINER_SAS_URL: ${{ secrets.AZURE_RAW_CONTAINER_SAS_URL }}
