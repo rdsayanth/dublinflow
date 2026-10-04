@@ -5,7 +5,8 @@
 ```mermaid
 flowchart LR
     subgraph Cloud
-        GBFS[Dublin Bikes GBFS feed] --> GHA[GitHub Actions<br/>every 10 min<br/>Python collector]
+        CRON[cron-job.org<br/>every 10 min] -->|workflow_dispatch| GHA
+        GBFS[Dublin Bikes GBFS feed] --> GHA[GitHub Actions<br/>Python collector]
         GHA --> BLOB[(Azure Blob Storage<br/>raw JSON)]
     end
     subgraph Local
@@ -24,6 +25,7 @@ flowchart LR
 | Decision | Reason |
 |---|---|
 | Collector runs in GitHub Actions, not on my laptop | Data keeps collecting every 10 minutes even when the laptop is off. Free for public repos. |
+| Runs are triggered by cron-job.org, with GitHub's own cron as a backup | GitHub's scheduled runs are best-effort and produced no runs in my first two hours. cron-job.org calls the GitHub API every 10 minutes using a token that can only run this repo's workflows. Both are free. |
 | Raw JSON stored in Azure Blob Storage | Cheap, durable storage for raw files. Keeping the raw data means any later step can be re-run from scratch. |
 | PostgreSQL runs locally | Free, and the data volume is small enough for one machine. |
 | dbt for transformations | SQL models are version-controlled, tested and documented, with clear layers. |
