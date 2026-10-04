@@ -1,11 +1,13 @@
 name: Collect Dublin Bikes data
 
 on:
-  workflow_dispatch:        # adds a "Run workflow" button on GitHub
-
+  workflow_dispatch:          # keep the manual button
+  schedule:
+    - cron: "*/10 * * * *"    # every 10 minutes, in UTC
 jobs:
   collect:
     runs-on: ubuntu-latest  # a fresh Linux machine for each run
+    timeout-minutes: 5        # kill a stuck run instead of letting it hang
     steps:
       - uses: actions/checkout@v5          # copy your repo onto the machine
       - uses: actions/setup-python@v6      # install Python
