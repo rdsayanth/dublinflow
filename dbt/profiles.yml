@@ -1,0 +1,14 @@
+# Connection profile for dbt. No secrets here: values come from environment
+# variables (the PG* lines in .env), loaded with `dotenv run -- dbt ...`.
+dublinflow:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('PGHOST') }}"
+      port: "{{ env_var('PGPORT') | as_number }}"
+      dbname: "{{ env_var('PGDATABASE') }}"
+      user: "{{ env_var('PGUSER') }}"
+      password: "{{ env_var('PGPASSWORD') }}"
+      schema: analytics
+      threads: 4
