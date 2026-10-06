@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw tables loaded by the Python scripts in ingestion/. dbt only reads them."
+    schema: raw
+    tables:
+      - name: gbfs_snapshot
+        description: "Live feed: one row per JSON file the collector saved to Azure Blob (every 10 min since 2026-10-04)."
+        columns:
+          - name: blob_path
+            description: "Path of the file in Azure Blob. Primary key."
+            data_tests:
+              - unique
+              - not_null
+
+      - name: dublinbikes_history
+        description: "Smart Dublin monthly CSVs, May 2024 to June 2026. 5-minute snapshots, all columns text, times UTC."
+
+      - name: weather_hourly
+        description: "Met Éireann hourly weather at Dublin Airport (station 532). All columns text, times UTC."
+        columns:
+          - name: date
+            description: "Hour of the reading, UTC, as text like 01-jan-1946 00:00."
+            data_tests:
+              - unique
+              - not_null
