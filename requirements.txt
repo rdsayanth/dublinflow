@@ -2,3 +2,5 @@ requests==2.34.2
 python-dotenv==1.2.4
 azure-storage-blob==12.31.0
 psycopg[binary]==3.3.6
+dbt-core==1.12.5
+dbt-postgres==1.11.0
