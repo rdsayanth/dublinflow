@@ -31,6 +31,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   dublinflow:
-     # staging = clean and cast raw data, built as views (no extra copy of the data)
+    # staging = clean and cast raw data, built as views (no extra copy of the data)
     staging:
       +materialized: view
+    # marts = final tables for analysis and Power BI (stored as tables, fast to query)
+    marts:
+      +materialized: table

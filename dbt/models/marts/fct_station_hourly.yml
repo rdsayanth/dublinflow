@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: fct_station_hourly
+    description: "One row per station per hour (UTC) from the 5-minute history. Hours with no reading are left out (no forward-fill)."
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "station_id || '@' || hour_utc"
+    columns:
+      - name: station_id
+        description: "Dublin Bikes station number."
+        data_tests:
+          - not_null
+      - name: hour_utc
+        description: "Start of the hour, UTC."
+        data_tests:
+          - not_null
+      - name: share_empty
+        description: "Share of readings in the hour with 0 bikes (0 to 1)."
