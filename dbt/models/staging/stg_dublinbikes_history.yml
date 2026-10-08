@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_dublinbikes_history
+    description: "Dublin Bikes station status history (Smart Dublin), typed and renamed. Times UTC."
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "station_id || '@' || snapshot_at_utc"
+    columns:
+      - name: snapshot_at_utc
+        description: "Time of the 5-minute snapshot, UTC."
+        data_tests:
+          - not_null
+      - name: station_id
+        description: "Dublin Bikes station number."
+        data_tests:
+          - not_null
+      - name: bikes_available
+        description: "Bikes available to rent at that moment."
+        data_tests:
+          - not_null
