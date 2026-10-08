@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: stg_weather_hourly
+    description: "Hourly weather at Dublin Airport, one row per hour (UTC), typed and renamed."
+    columns:
+      - name: observed_at_utc
+        description: "Hour of the reading, UTC."
+        data_tests:
+          - unique
+          - not_null
+      - name: rain_mm
+        description: "Rain in the hour, mm."
+        data_tests:
+          - not_null
+      - name: temp_c
+        description: "Air temperature, degrees C."
+        data_tests:
+          - not_null
