@@ -16,5 +16,9 @@ models:
         description: "Start of the hour, UTC."
         data_tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_hour')
+                field: hour_utc
       - name: share_empty
         description: "Share of readings in the hour with 0 bikes (0 to 1)."

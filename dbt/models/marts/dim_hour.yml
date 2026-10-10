@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: dim_hour
+    description: "One row per hour (UTC) since May 2024, with Irish local time, weekday and the weather for that hour."
+    columns:
+      - name: hour_utc
+        description: "Start of the hour, UTC. Primary key."
+        data_tests:
+          - unique
+          - not_null
+      - name: hour_local
+        description: "Same hour in Irish local time (Europe/Dublin, handles summer time)."
+        data_tests:
+          - not_null
+      - name: rain_mm
+        description: "Rain during this hour, mm (Met Éireann row stamped one hour later). NULL until Met Éireann publishes that month."
