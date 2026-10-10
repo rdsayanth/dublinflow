@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: stg_gbfs_station_status
+    description: "Live Dublin Bikes feed (GBFS station_status) since 2026-10-04, one row per station per snapshot. Times UTC."
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "station_id || '@' || snapshot_at_utc"
+    columns:
+      - name: snapshot_at_utc
+        description: "Feed time of the snapshot (last_updated), UTC. Use this, not station_last_reported_utc."
+        data_tests:
+          - not_null
+      - name: station_id
+        description: "Dublin Bikes station number."
+        data_tests:
+          - not_null
+      - name: station_last_reported_utc
+        description: "GBFS last_reported. Often hours old even when counts change (checked 2026-10-10), so not used for timing."

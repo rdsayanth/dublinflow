@@ -34,6 +34,9 @@ models:
     # staging = clean and cast raw data, built as views (no extra copy of the data)
     staging:
       +materialized: view
+    # intermediate = combine and reshape staging models, built as views
+    intermediate:
+      +materialized: view
     # marts = final tables for analysis and Power BI (stored as tables, fast to query)
     marts:
       +materialized: table
