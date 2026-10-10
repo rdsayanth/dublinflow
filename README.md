@@ -1,6 +1,6 @@
 # DublinFlow: Dublin Bikes Reliability Data Platform
 
-> Work in progress. Phases 1 to 5 of 9 done: live collection, raw data layer, 2 years of history and weather.
+> Work in progress. Phases 1 to 6 of 9 done: live collection, raw data layer, 2 years of history and weather, and a tested dbt star schema.
 
 ## The question
 
@@ -18,6 +18,22 @@ An end-to-end data pipeline:
 5. A Power BI report presents the findings.
 
 See [docs/architecture.md](docs/architecture.md) for the design and [docs/data_quality.md](docs/data_quality.md) for data checks and known gaps.
+
+## Data model (dbt)
+
+![dbt lineage graph](docs/images/dbt_lineage.png)
+
+| Layer | Model | What it holds |
+|---|---|---|
+| Staging (views) | `stg_dublinbikes_history` | Smart Dublin history, typed, one row per station per snapshot |
+| | `stg_gbfs_station_status` | Live feed JSON unpacked, one row per station per snapshot |
+| | `stg_weather_hourly` | Met Éireann hourly weather, typed |
+| Intermediate (view) | `int_station_readings` | History and live readings combined, with a `data_source` column |
+| Marts (tables) | `fct_station_hourly` | Fact: one row per station per hour (bikes available, share of time empty, full, not renting) |
+| | `dim_hour` | Every hour since May 2024 in UTC and Irish local time, with weather |
+| | `dim_station` | One row per station: name, location, capacity |
+
+Tests check uniqueness, missing values and the links from the fact table to both dimensions. A source freshness check warns if no live snapshot has arrived for 2 days.
 
 ## Reliability Score
 
@@ -57,6 +73,16 @@ python ingestion/load_raw_to_postgres.py        # live snapshots from Azure Blob
 python ingestion/download_history.py            # Smart Dublin monthly CSVs
 python ingestion/load_history_to_postgres.py
 python ingestion/load_weather_to_postgres.py    # Met Éireann hourly weather
+```
+
+Then build and test the dbt models (run from the repo root; `dotenv run` loads `.env` so dbt finds the project and the database):
+
+```
+dotenv run -- dbt debug                 # check the connection
+dotenv run -- dbt build                 # build all models and run all tests
+dotenv run -- dbt source freshness      # check the live data is recent
+dotenv run -- dbt docs generate         # build the documentation site
+dotenv run -- dbt docs serve            # open it in the browser
 ```
 
 ## Data sources and attribution
