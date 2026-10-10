@@ -12,6 +12,10 @@ models:
         description: "Dublin Bikes station number."
         data_tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_station')
+                field: station_id
       - name: hour_utc
         description: "Start of the hour, UTC."
         data_tests:

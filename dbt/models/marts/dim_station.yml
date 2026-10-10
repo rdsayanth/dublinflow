@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_station
+    description: "One row per Dublin Bikes station seen in the history. Name, location and capacity from its most recent reading."
+    columns:
+      - name: station_id
+        description: "Dublin Bikes station number. Primary key."
+        data_tests:
+          - unique
+          - not_null
+      - name: station_name
+        description: "Station name at its most recent reading."
+        data_tests:
+          - not_null
