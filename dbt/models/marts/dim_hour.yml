@@ -13,5 +13,9 @@ models:
         description: "Same hour in Irish local time (Europe/Dublin, handles summer time)."
         data_tests:
           - not_null
+      - name: is_service_hour
+        description: "True for local hours 05:00 to 23:59, when bikes can be rented (published hours 05:00 to 00:30). Used to filter the Reliability Score."
+        data_tests:
+          - not_null
       - name: rain_mm
         description: "Rain during this hour, mm (Met Éireann row stamped one hour later). NULL until Met Éireann publishes that month."

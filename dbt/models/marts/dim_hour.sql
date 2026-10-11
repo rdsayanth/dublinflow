@@ -2,6 +2,8 @@
 -- Met Éireann stamps hourly rain at HH:00 as the total for the hour that just ended,
 -- so the bike hour starting at HH:00 takes the weather row stamped HH+1:00.
 -- Hours with no weather yet (Met Éireann publishes monthly) have NULL weather.
+-- Service hours: bikes can be rented 05:00 to 00:30 (Dublin City Council). The feed does not
+-- flag the night closure (under 1% "not renting" at night), so we use local hours 05 to 23.
 
 with hours as (
 
@@ -43,6 +45,7 @@ select
     extract(isodow from hour_local)::integer as day_of_week,      -- 1 = Monday, 7 = Sunday
     to_char(hour_local, 'Dy')                as day_name,
     extract(isodow from hour_local) >= 6     as is_weekend,
+    extract(hour from hour_local) between 5 and 23 as is_service_hour,
     rain_mm,
     temp_c,
     wind_speed_kt,
