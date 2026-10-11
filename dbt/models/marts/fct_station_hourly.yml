@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: fct_station_hourly
-    description: "One row per station per hour (UTC) from the 5-minute history. Hours with no reading are left out (no forward-fill)."
+    description: "One row per station per hour (UTC) from the history and the live feed. Hours with no reading are left out (no forward-fill)."
     data_tests:
       - unique:
           arguments:
@@ -25,4 +25,10 @@ models:
                 to: ref('dim_hour')
                 field: hour_utc
       - name: share_empty
-        description: "Share of readings in the hour with 0 bikes (0 to 1)."
+        description: "Share of in-service readings in the hour with 0 bikes (0 to 1). NULL if the whole hour was out of service."
+      - name: share_full
+        description: "Share of in-service readings in the hour with 0 free docks (0 to 1). NULL if the whole hour was out of service."
+      - name: share_out_of_service
+        description: "Share of readings with 0 bikes and 0 free docks at the same time (docks out of service)."
+        data_tests:
+          - not_null

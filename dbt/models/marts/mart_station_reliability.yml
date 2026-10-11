@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: mart_station_reliability
+    description: "One row per station: Reliability Score, % of service hours empty and full, and rank. Service hours = local 05:00 to 23:59."
+    columns:
+      - name: station_id
+        description: "Station ID. Primary key."
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_station')
+                field: station_id
+      - name: reliability_score
+        description: "100 x (1 - share of service time empty - share of service time full). 100 = never empty or full."
+        data_tests:
+          - not_null
+      - name: reliability_rank
+        description: "1 = most reliable station. Ties share a rank."
