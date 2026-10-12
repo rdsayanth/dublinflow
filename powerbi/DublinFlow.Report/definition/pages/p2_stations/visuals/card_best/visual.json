@@ -3,9 +3,9 @@
   "name": "card_best",
   "position": {
     "x": 800,
-    "y": 84,
+    "y": 96,
     "z": 3,
-    "height": 110,
+    "height": 104,
     "width": 228,
     "tabOrder": 3
   },
@@ -33,6 +33,21 @@
         }
       }
     },
-    "drillFilterOtherVisuals": true
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

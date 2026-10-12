@@ -127,6 +127,14 @@ table dim_hour
 
 		annotation SummarizationSetBy = User
 
+	/// Weekday or Weekend (readable label for is_weekend).
+	column 'Day Type' = IF(dim_hour[is_weekend], "Weekend", "Weekday")
+		dataType: string
+		lineageTag: e225c94f-a400-5c52-b316-05c052faaba2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition dim_hour = m
 		mode: import
 		source =

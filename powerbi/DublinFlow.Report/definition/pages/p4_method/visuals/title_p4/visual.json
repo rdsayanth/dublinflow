@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "title_p4",
   "position": {
-    "x": 16,
-    "y": 8,
+    "x": 0,
+    "y": 0,
     "z": 0,
-    "height": 74,
-    "width": 900,
+    "height": 80,
+    "width": 1280,
     "tabOrder": 0
   },
   "visual": {
@@ -22,7 +22,8 @@
                     "value": "Data and method",
                     "textStyle": {
                       "fontWeight": "bold",
-                      "fontSize": "18pt"
+                      "fontSize": "18pt",
+                      "color": "#FFFFFF"
                     }
                   }
                 ]
@@ -33,12 +34,105 @@
                     "value": "How the numbers are made, where they come from, and what they cannot tell you.",
                     "textStyle": {
                       "fontSize": "10pt",
-                      "color": "#605E5C"
+                      "color": "#C9CFE4"
                     }
                   }
                 ]
               }
             ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1B2340'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "24D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "24D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
           }
         }
       ]

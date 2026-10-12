@@ -127,19 +127,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "is_weekend"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Weekend": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "fct_station_hourly.reliability_score": {
 			      "Definition": {
@@ -215,6 +203,69 @@ cultureInfo en-US
 			      "Terms": [
 			        {
 			          "Rank": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fct_station_hourly.dbt_check_result": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fct_station_hourly",
+			          "ConceptualProperty": "dbt Check Result"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cross-check: DAX Reliability Score vs dbt mart": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fct_station_hourly.dbt_mismatch": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fct_station_hourly",
+			          "ConceptualProperty": "dbt Mismatch"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Difference (DAX - dbt)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_hour.day_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_hour",
+			          "ConceptualProperty": "Day Type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Day type": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

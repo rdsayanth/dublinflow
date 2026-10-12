@@ -3,9 +3,9 @@
   "name": "dbt_check_table",
   "position": {
     "x": 800,
-    "y": 80,
+    "y": 228,
     "z": 5,
-    "height": 624,
+    "height": 472,
     "width": 464,
     "tabOrder": 5
   },
@@ -38,26 +38,12 @@
                       "Entity": "fct_station_hourly"
                     }
                   },
-                  "Property": "Reliability Score"
+                  "Property": "dbt Mismatch"
                 }
               },
-              "queryRef": "fct_station_hourly.Reliability Score",
-              "nativeQueryRef": "Reliability Score",
-              "displayName": "Score"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fct_station_hourly"
-                    }
-                  },
-                  "Property": "dbt Score Check"
-                }
-              },
-              "queryRef": "fct_station_hourly.dbt Score Check",
-              "nativeQueryRef": "dbt Score Check"
+              "queryRef": "fct_station_hourly.dbt Mismatch",
+              "nativeQueryRef": "dbt Mismatch",
+              "displayName": "Difference (DAX - dbt)"
             }
           ]
         }
@@ -75,7 +61,7 @@
                 "Property": "station_name"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ]
       }
@@ -94,7 +80,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Cross-check with dbt (0 = same result)'"
+                  "Value": "'Stations that do not match dbt (empty = all match)'"
                 }
               }
             }

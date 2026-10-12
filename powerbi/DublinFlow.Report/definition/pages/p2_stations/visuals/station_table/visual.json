@@ -3,9 +3,9 @@
   "name": "station_table",
   "position": {
     "x": 16,
-    "y": 84,
+    "y": 96,
     "z": 2,
-    "height": 620,
+    "height": 604,
     "width": 768,
     "tabOrder": 2
   },

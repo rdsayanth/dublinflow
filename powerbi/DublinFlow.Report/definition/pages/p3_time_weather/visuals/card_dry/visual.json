@@ -3,9 +3,9 @@
   "name": "card_dry",
   "position": {
     "x": 660,
-    "y": 84,
+    "y": 96,
     "z": 2,
-    "height": 110,
+    "height": 104,
     "width": 196,
     "tabOrder": 2
   },

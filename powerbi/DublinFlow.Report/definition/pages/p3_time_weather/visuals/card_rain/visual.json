@@ -3,9 +3,9 @@
   "name": "card_rain",
   "position": {
     "x": 864,
-    "y": 84,
+    "y": 96,
     "z": 3,
-    "height": 110,
+    "height": 104,
     "width": 196,
     "tabOrder": 3
   },

@@ -86,7 +86,7 @@ table fct_station_hourly
 	measure 'Station Rank' =
 			IF(
 			    HASONEVALUE(dim_station[station_name]) && NOT ISBLANK([Reliability Score]),
-			    RANKX(ALLSELECTED(dim_station[station_name]), [Reliability Score], , DESC, DENSE)
+			    RANKX(ALLSELECTED(dim_station), [Reliability Score], , DESC, DENSE)
 			)
 		formatString: 0
 		displayFolder: Measures
@@ -119,6 +119,44 @@ table fct_station_hourly
 		formatString: 0.0
 		displayFolder: Measures
 		lineageTag: 6037c785-2632-5782-a1d2-43522f1bd4a1
+
+	/// Number of stations in dbt's mart_station_reliability.
+	measure 'Stations Checked' = DISTINCTCOUNT(mart_station_reliability[station_id])
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: 05d09b28-2fa3-4af4-8001-535e15388517
+
+	/// Stations where the DAX Reliability Score (1 decimal) equals dbt's reliability_score (tolerance 0.05 for floating point).
+	measure 'Stations Matching dbt' =
+			COUNTROWS(
+			    FILTER(
+			        VALUES(dim_station[station_id]),
+			        VAR Diff = [dbt Score Check]
+			        RETURN NOT ISBLANK(Diff) && ABS(Diff) < 0.05
+			    )
+			) + 0
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: 58907aa8-e5b9-4011-9954-32de162e0722
+
+	/// Pass/fail text for the dbt cross-check card.
+	measure 'dbt Check Result' = FORMAT([Stations Matching dbt], "0") & " of " & FORMAT([Stations Checked], "0") & " stations match dbt"
+		displayFolder: Measures
+		lineageTag: 889850d9-e6e7-42ee-a0a1-b109d578f19c
+
+	/// Green when every station matches dbt, red otherwise (used for conditional formatting).
+	measure 'dbt Check Colour' = IF([Stations Matching dbt] = [Stations Checked], "#3E9C6E", "#D1495B")
+		displayFolder: Measures
+		lineageTag: 318ec85c-d7a8-4b2b-a49b-29a19d43a44c
+
+	/// dbt Score Check, but blank when it matches, so a table shows only stations that do not match.
+	measure 'dbt Mismatch' =
+			VAR Diff = [dbt Score Check]
+			RETURN
+			    IF(ABS(Diff) >= 0.05, Diff)
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Measures
+		lineageTag: 05792840-5293-4185-a554-e1ea85518d9d
 
 	column station_id
 		dataType: int64

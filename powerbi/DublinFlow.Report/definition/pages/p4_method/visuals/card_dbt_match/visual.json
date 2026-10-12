@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "card_dbt_match",
+  "position": {
+    "x": 800,
+    "y": 96,
+    "z": 6,
+    "height": 120,
+    "width": 464,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_station_hourly"
+                    }
+                  },
+                  "Property": "dbt Check Result"
+                }
+              },
+              "queryRef": "fct_station_hourly.dbt Check Result",
+              "nativeQueryRef": "dbt Check Result",
+              "displayName": "Cross-check: DAX Reliability Score vs dbt mart"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fct_station_hourly"
+                        }
+                      },
+                      "Property": "dbt Check Colour"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

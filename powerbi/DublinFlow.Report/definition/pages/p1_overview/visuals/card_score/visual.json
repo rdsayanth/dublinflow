@@ -3,9 +3,9 @@
   "name": "card_score",
   "position": {
     "x": 16,
-    "y": 84,
+    "y": 96,
     "z": 2,
-    "height": 100,
+    "height": 94,
     "width": 295,
     "tabOrder": 2
   },

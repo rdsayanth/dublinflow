@@ -3,9 +3,9 @@
   "name": "card_worst",
   "position": {
     "x": 1036,
-    "y": 84,
+    "y": 96,
     "z": 4,
-    "height": 110,
+    "height": 104,
     "width": 228,
     "tabOrder": 4
   },
@@ -33,6 +33,21 @@
         }
       }
     },
-    "drillFilterOtherVisuals": true
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "16D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

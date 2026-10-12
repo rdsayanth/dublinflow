@@ -3,9 +3,9 @@
   "name": "heatmap_hour_day",
   "position": {
     "x": 16,
-    "y": 84,
+    "y": 96,
     "z": 1,
-    "height": 620,
+    "height": 604,
     "width": 628,
     "tabOrder": 1
   },

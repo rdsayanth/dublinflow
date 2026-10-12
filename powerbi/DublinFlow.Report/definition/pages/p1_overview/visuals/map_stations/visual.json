@@ -3,9 +3,9 @@
   "name": "map_stations",
   "position": {
     "x": 752,
-    "y": 200,
+    "y": 210,
     "z": 7,
-    "height": 504,
+    "height": 490,
     "width": 512,
     "tabOrder": 7
   },
@@ -252,9 +252,48 @@
           }
         }
       ],
+      "bubbles": [
+        {
+          "properties": {
+            "bubbleSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "-5D"
+                }
+              }
+            }
+          }
+        }
+      ],
       "markers": [
         {
-          "properties": {}
+          "properties": {
+            "borderShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "borderWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          }
         }
       ]
     },

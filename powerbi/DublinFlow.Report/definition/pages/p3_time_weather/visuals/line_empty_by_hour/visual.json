@@ -3,9 +3,9 @@
   "name": "line_empty_by_hour",
   "position": {
     "x": 660,
-    "y": 210,
+    "y": 220,
     "z": 5,
-    "height": 494,
+    "height": 480,
     "width": 604,
     "tabOrder": 5
   },
@@ -43,12 +43,12 @@
                       "Entity": "dim_hour"
                     }
                   },
-                  "Property": "is_weekend"
+                  "Property": "Day Type"
                 }
               },
-              "queryRef": "dim_hour.is_weekend",
-              "nativeQueryRef": "is_weekend",
-              "displayName": "Weekend"
+              "queryRef": "dim_hour.Day Type",
+              "nativeQueryRef": "Day Type",
+              "displayName": "Day type"
             }
           ]
         },
@@ -103,7 +103,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'% Empty by hour of day: weekday (False) vs weekend (True)'"
+                  "Value": "'% Empty by hour of day: weekday vs weekend'"
                 }
               }
             }
