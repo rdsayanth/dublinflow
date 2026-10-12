@@ -1,0 +1,116 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "line_empty_by_hour",
+  "position": {
+    "x": 660,
+    "y": 210,
+    "z": 5,
+    "height": 494,
+    "width": 604,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_hour"
+                    }
+                  },
+                  "Property": "hour_of_day_local"
+                }
+              },
+              "queryRef": "dim_hour.hour_of_day_local",
+              "nativeQueryRef": "hour_of_day_local",
+              "active": true,
+              "displayName": "Hour of day"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_hour"
+                    }
+                  },
+                  "Property": "is_weekend"
+                }
+              },
+              "queryRef": "dim_hour.is_weekend",
+              "nativeQueryRef": "is_weekend",
+              "displayName": "Weekend"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_station_hourly"
+                    }
+                  },
+                  "Property": "% Empty"
+                }
+              },
+              "queryRef": "fct_station_hourly.% Empty",
+              "nativeQueryRef": "% Empty"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dim_hour"
+                  }
+                },
+                "Property": "hour_of_day_local"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'% Empty by hour of day: weekday (False) vs weekend (True)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

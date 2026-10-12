@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "card_dry",
+  "position": {
+    "x": 660,
+    "y": 84,
+    "z": 2,
+    "height": 110,
+    "width": 196,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fct_station_hourly"
+                    }
+                  },
+                  "Property": "Score (Dry)"
+                }
+              },
+              "queryRef": "fct_station_hourly.Score (Dry)",
+              "nativeQueryRef": "Score (Dry)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

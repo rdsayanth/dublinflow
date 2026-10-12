@@ -1,0 +1,87 @@
+/// One row per Dublin Bikes station (dbt model analytics.dim_station).
+table dim_station
+	lineageTag: 4300b530-7a09-53ab-be1b-09c35acc0ae7
+
+	column station_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a55dd44-9e77-5e52-9727-a4ea4e91ca5c
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = User
+
+	column station_name
+		dataType: string
+		lineageTag: c31636b7-4e80-5c33-b791-64d4270d7079
+		summarizeBy: none
+		sourceColumn: station_name
+
+		annotation SummarizationSetBy = User
+
+	column latitude
+		dataType: double
+		lineageTag: 7199548d-1e46-5be1-b05c-a08868c80cdb
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = User
+
+	column longitude
+		dataType: double
+		lineageTag: 67e1acdd-1cf9-5e0a-a3b9-d812d47a58f2
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = User
+
+	column capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: 3318c34d-45a6-5263-bab9-bb0802a96786
+		summarizeBy: none
+		sourceColumn: capacity
+
+		annotation SummarizationSetBy = User
+
+	column is_installed_at_last_reading
+		dataType: boolean
+		lineageTag: 7ae662a7-c5eb-5fae-be6b-d8c37f4d9d1a
+		summarizeBy: none
+		sourceColumn: is_installed_at_last_reading
+
+		annotation SummarizationSetBy = User
+
+	column first_seen_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6b4c6d4c-2bd7-517e-81ed-67d18387aae4
+		summarizeBy: none
+		sourceColumn: first_seen_utc
+
+		annotation SummarizationSetBy = User
+
+	column last_seen_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4f59dc6a-6bfc-5e58-9c97-8f209d9eb95d
+		summarizeBy: none
+		sourceColumn: last_seen_utc
+
+		annotation SummarizationSetBy = User
+
+	partition dim_station = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "dublinflow"),
+				    analytics_dim_station = Source{[Schema="analytics", Item="dim_station"]}[Data]
+				in
+				    analytics_dim_station
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

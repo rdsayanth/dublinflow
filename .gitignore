@@ -18,6 +18,10 @@ logs/
 # Testing
 .pytest_cache/
 
+# Power BI Project (.pbip): local data cache and per-user settings
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+
 # Power BI lock files, editor and Windows junk
 ~$*
 .vscode/

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
+  "pageOrder": [
+    "p1_overview",
+    "p2_stations",
+    "p3_time_weather",
+    "p4_method"
+  ],
+  "activePageName": "p2_stations"
+}

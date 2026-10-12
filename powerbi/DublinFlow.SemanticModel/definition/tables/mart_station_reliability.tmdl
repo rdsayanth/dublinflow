@@ -1,0 +1,107 @@
+/// dbt's own Reliability Score per station, used to cross-check the DAX measures.
+table mart_station_reliability
+	lineageTag: b81279dc-97fa-56ba-b87c-82aeee95d895
+
+	column station_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 333450aa-adfe-5b2e-81d2-a42fc0fd4a06
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = User
+
+	column station_name
+		dataType: string
+		lineageTag: e02ba1b9-8acd-5359-ab4c-dd5b5f877ae4
+		summarizeBy: none
+		sourceColumn: station_name
+
+		annotation SummarizationSetBy = User
+
+	column capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: e0787bda-c834-5d52-a1f4-b539b05b7ce5
+		summarizeBy: none
+		sourceColumn: capacity
+
+		annotation SummarizationSetBy = User
+
+	column service_hours
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7eb3505a-de42-552d-a9b5-e061792c66b4
+		summarizeBy: none
+		sourceColumn: service_hours
+
+		annotation SummarizationSetBy = User
+
+	column in_service_hours
+		dataType: int64
+		formatString: #,0
+		lineageTag: 044fd8b3-a7d9-5706-9fca-4ab2d3155c16
+		summarizeBy: none
+		sourceColumn: in_service_hours
+
+		annotation SummarizationSetBy = User
+
+	column pct_out_of_service
+		dataType: double
+		formatString: 0.0
+		lineageTag: 28945f32-bca7-509b-8213-a898e181f943
+		summarizeBy: none
+		sourceColumn: pct_out_of_service
+
+		annotation SummarizationSetBy = User
+
+	column pct_empty
+		dataType: double
+		formatString: 0.0
+		lineageTag: 173c2600-c068-5336-9b8e-1751caec962f
+		summarizeBy: none
+		sourceColumn: pct_empty
+
+		annotation SummarizationSetBy = User
+
+	column pct_full
+		dataType: double
+		formatString: 0.0
+		lineageTag: 272de742-810f-554b-8201-9220d23015c4
+		summarizeBy: none
+		sourceColumn: pct_full
+
+		annotation SummarizationSetBy = User
+
+	column reliability_score
+		dataType: double
+		formatString: 0.0
+		lineageTag: e01ffc70-2b33-5528-bdc7-66eefd01e91c
+		summarizeBy: none
+		sourceColumn: reliability_score
+
+		annotation SummarizationSetBy = User
+
+	column reliability_rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 13cb3acf-01e5-5289-8001-4d2971465492
+		summarizeBy: none
+		sourceColumn: reliability_rank
+
+		annotation SummarizationSetBy = User
+
+	partition mart_station_reliability = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "dublinflow"),
+				    analytics_mart_station_reliability = Source{[Schema="analytics", Item="mart_station_reliability"]}[Data]
+				in
+				    analytics_mart_station_reliability
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,18 @@
+relationship 9452c3d2-55b5-533b-afdd-c350e3a3f2cf
+	fromColumn: fct_station_hourly.station_id
+	toColumn: dim_station.station_id
+
+relationship 8a06eafb-88ae-5d52-bc71-b9b8617b57b4
+	fromColumn: fct_station_hourly.hour_utc
+	toColumn: dim_hour.hour_utc
+
+relationship 75ca4bb9-8612-594c-827c-6ebf47d43385
+	fromColumn: dim_hour.date_local
+	toColumn: Date.Date
+
+relationship fc316991-6ca6-58cb-ad2d-beb22dc084f7
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: mart_station_reliability.station_id
+	toColumn: dim_station.station_id
+

@@ -1,0 +1,87 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1186.8899992388156,
+            "y": 173.06726536896605
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "7c55432e-cf0b-5320-8123-994d33fd4518",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 902.68375043077776,
+            "y": 75.144998600244776
+          },
+          "nodeIndex": "dim_hour",
+          "nodeLineageTag": "30e2c4bd-ab31-5df5-814c-74de7d677ab7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 334.21038232322633,
+            "y": 15.987699727704012
+          },
+          "nodeIndex": "dim_station",
+          "nodeLineageTag": "4300b530-7a09-53ab-be1b-09c35acc0ae7",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 618.43572994368481,
+            "y": 36.222523376058575
+          },
+          "nodeIndex": "fct_station_hourly",
+          "nodeLineageTag": "0afddd13-bcd6-569f-968b-ab09f220c560",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": -50.000000000000028
+          },
+          "nodeIndex": "mart_station_reliability",
+          "nodeLineageTag": "b81279dc-97fa-56ba-b87c-82aeee95d895",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

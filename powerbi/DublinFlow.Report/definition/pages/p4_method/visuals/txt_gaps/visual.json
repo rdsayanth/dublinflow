@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "txt_gaps",
+  "position": {
+    "x": 16,
+    "y": 406,
+    "z": 3,
+    "height": 130,
+    "width": 768,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Known gaps",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "13pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Most of September 2024 is missing in the history."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "25 January to 5 February 2026 is missing in the history."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "July to September 2026: no data (history ends June 2026, live collection starts 4 October 2026)."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

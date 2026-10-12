@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "txt_limits",
+  "position": {
+    "x": 16,
+    "y": 544,
+    "z": 4,
+    "height": 160,
+    "width": 768,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Limitations",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "13pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Snapshots show availability (bikes and docks), not trips: we cannot see demand that was not met."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "One weather station (Dublin Airport) stands in for the whole city."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "dbt Score Check (right) should be 0 for every station when no slicers are set: it compares the DAX measure with dbt's mart_station_reliability.",
+                    "textStyle": {
+                      "color": "#605E5C"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

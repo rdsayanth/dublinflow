@@ -1,0 +1,64 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "txt_score",
+  "position": {
+    "x": 16,
+    "y": 80,
+    "z": 1,
+    "height": 160,
+    "width": 768,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How the score works",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "13pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Reliability Score = 100 x (1 - share of service time the station is empty - share of time it is full)."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Empty = 0 bikes available. Full = 0 free docks. 100 means there was always a bike and a free dock."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Service hours are 05:00 to 23:59 Irish time. Each station-hour counts equally."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "A station with 0 bikes and 0 docks is out of service: that time is left out of the score and reported separately as % Out of Service."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

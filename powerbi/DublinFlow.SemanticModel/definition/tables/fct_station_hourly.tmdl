@@ -1,0 +1,226 @@
+/// One row per station per hour: shares of the hour the station was empty, full or out of service.
+table fct_station_hourly
+	lineageTag: 0afddd13-bcd6-569f-968b-ab09f220c560
+
+	/// Station-hours in service time (05:00-23:59 Irish time), including out-of-service hours.
+	measure 'Station Hours' = CALCULATE(COUNTROWS(fct_station_hourly), dim_hour[is_service_hour] = TRUE())
+		formatString: #,0
+		displayFolder: Measures
+		lineageTag: cf1ab68c-8d73-57bd-8676-16046e0c1f07
+
+	/// Station-hours in service time where the station was not out of service for the whole hour.
+	measure 'In-Service Hours' = CALCULATE(COUNT(fct_station_hourly[share_empty]), dim_hour[is_service_hour] = TRUE())
+		formatString: #,0
+		displayFolder: Measures
+		lineageTag: 412fbe0b-e71b-5f07-b6bf-bd47758b304b
+
+	/// Share of in-service time with 0 bikes available.
+	measure '% Empty' = CALCULATE(AVERAGE(fct_station_hourly[share_empty]), dim_hour[is_service_hour] = TRUE())
+		formatString: 0.0%
+		displayFolder: Measures
+		lineageTag: 43c69d43-b8f2-5342-a19d-128b8e350850
+
+	/// Share of in-service time with 0 free docks.
+	measure '% Full' = CALCULATE(AVERAGE(fct_station_hourly[share_full]), dim_hour[is_service_hour] = TRUE())
+		formatString: 0.0%
+		displayFolder: Measures
+		lineageTag: 8f22e1f9-f714-5242-bdf7-ba533df9f6a3
+
+	/// Share of service time with 0 bikes and 0 docks (station out of service).
+	measure '% Out of Service' = CALCULATE(AVERAGE(fct_station_hourly[share_out_of_service]), dim_hour[is_service_hour] = TRUE())
+		formatString: 0.0%
+		displayFolder: Measures
+		lineageTag: ed5de49d-228e-5f4b-bf42-fb25d25e5da8
+
+	/// 100 x (1 - share of in-service time empty - share full). 100 = always a bike and a free dock.
+	measure 'Reliability Score' =
+			VAR EmptyShare = [% Empty]
+			VAR FullShare = [% Full]
+			RETURN
+			    IF(NOT ISBLANK(EmptyShare), 100 * (1 - EmptyShare - FullShare))
+		formatString: 0.0
+		displayFolder: Measures
+		lineageTag: b6fc84d3-07e9-5b70-b8b5-83fbfa80b7f7
+
+	/// Reliability Score in hours with no rain.
+	measure 'Score (Dry)' = CALCULATE([Reliability Score], dim_hour[rain_mm] = 0)
+		formatString: 0.0
+		displayFolder: Measures
+		lineageTag: a8035514-a59d-53ad-b7ff-a0de6b1a9a04
+
+	/// Reliability Score in hours with rain.
+	measure 'Score (Rain)' = CALCULATE([Reliability Score], dim_hour[rain_mm] > 0)
+		formatString: 0.0
+		displayFolder: Measures
+		lineageTag: e4731596-a148-5dab-a692-c54ebcc85441
+
+	/// Score in rain minus score when dry, in points.
+	measure 'Rain Effect' = [Score (Rain)] - [Score (Dry)]
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Measures
+		lineageTag: 52ff7662-c625-5c98-9eff-4e8d70c9ff22
+
+	/// Reliability Score for the same dates one year earlier.
+	measure 'Score Same Period Last Year' = CALCULATE([Reliability Score], SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: 0.0
+		displayFolder: Measures
+		lineageTag: 0abb3d72-2c71-5703-acd8-0dfcad246b6b
+
+	/// Score now minus score in the same period last year, in points.
+	measure 'Change vs Last Year' =
+			VAR ThisYear = [Reliability Score]
+			VAR LastYear = [Score Same Period Last Year]
+			RETURN
+			    IF(NOT ISBLANK(ThisYear) && NOT ISBLANK(LastYear), ThisYear - LastYear)
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Measures
+		lineageTag: 6d3f89e9-2715-5e21-9e6a-5a6daec571db
+
+	/// Reliability Score over the 3 months ending on the last date in context.
+	measure 'Score Rolling 3 Months' = CALCULATE([Reliability Score], DATESINPERIOD('Date'[Date], MAX('Date'[Date]), -3, MONTH))
+		formatString: 0.0
+		displayFolder: Measures
+		lineageTag: afef4851-cff2-5d18-a99b-35af4efddb9f
+
+	/// 1 = most reliable station among the stations currently selected.
+	measure 'Station Rank' =
+			IF(
+			    HASONEVALUE(dim_station[station_name]) && NOT ISBLANK([Reliability Score]),
+			    RANKX(ALLSELECTED(dim_station[station_name]), [Reliability Score], , DESC, DENSE)
+			)
+		formatString: 0
+		displayFolder: Measures
+		lineageTag: 99ba2640-461f-5bd2-bf88-8816376fa995
+
+	/// Station with the highest Reliability Score in the current selection.
+	measure 'Best Station' =
+			MAXX(
+			    TOPN(1, FILTER(VALUES(dim_station[station_name]), NOT ISBLANK([Reliability Score])), [Reliability Score], DESC),
+			    dim_station[station_name]
+			)
+		displayFolder: Measures
+		lineageTag: ab9931b5-cab2-5e1a-a16b-01bb16892ba6
+
+	/// Station with the lowest Reliability Score in the current selection.
+	measure 'Worst Station' =
+			MAXX(
+			    TOPN(1, FILTER(VALUES(dim_station[station_name]), NOT ISBLANK([Reliability Score])), [Reliability Score], ASC),
+			    dim_station[station_name]
+			)
+		displayFolder: Measures
+		lineageTag: 2ae743fc-8cd4-5078-8b2e-933ce10d56d8
+
+	/// Power BI score minus dbt score for one station. Should be 0 when no filters are applied.
+	measure 'dbt Score Check' =
+			VAR PowerBI = ROUND([Reliability Score], 1)
+			VAR dbt = MAX(mart_station_reliability[reliability_score])
+			RETURN
+			    IF(HASONEVALUE(dim_station[station_id]), PowerBI - dbt)
+		formatString: 0.0
+		displayFolder: Measures
+		lineageTag: 6037c785-2632-5782-a1d2-43522f1bd4a1
+
+	column station_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a2016f7f-ba15-5e21-b3ca-64166eba7c8d
+		summarizeBy: none
+		sourceColumn: station_id
+
+		annotation SummarizationSetBy = User
+
+	column hour_utc
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 725541a5-d542-5413-8410-d7b2d1bfdcd9
+		summarizeBy: none
+		sourceColumn: hour_utc
+
+		annotation SummarizationSetBy = User
+
+	column data_source
+		dataType: string
+		lineageTag: ff2735a1-9434-5632-9966-e25c2c17c8b5
+		summarizeBy: none
+		sourceColumn: data_source
+
+		annotation SummarizationSetBy = User
+
+	column readings
+		dataType: int64
+		formatString: 0
+		lineageTag: 567f2162-5765-5b0e-9c74-da51efca9901
+		summarizeBy: sum
+		sourceColumn: readings
+
+		annotation SummarizationSetBy = User
+
+	column avg_bikes_available
+		dataType: double
+		formatString: 0.0
+		lineageTag: eb50382c-ac91-548e-8456-4c037f2aa117
+		summarizeBy: none
+		sourceColumn: avg_bikes_available
+
+		annotation SummarizationSetBy = User
+
+	column min_bikes_available
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d449eda-aa35-5a0e-a4a5-afacf91d1d9f
+		summarizeBy: none
+		sourceColumn: min_bikes_available
+
+		annotation SummarizationSetBy = User
+
+	column share_empty
+		dataType: double
+		formatString: 0.0%
+		lineageTag: e7303fa2-0c53-5c51-90b7-5510948b8ef1
+		summarizeBy: none
+		sourceColumn: share_empty
+
+		annotation SummarizationSetBy = User
+
+	column share_full
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 0ea0f2a7-9786-5f92-8685-1972c7fa8537
+		summarizeBy: none
+		sourceColumn: share_full
+
+		annotation SummarizationSetBy = User
+
+	column share_out_of_service
+		dataType: double
+		formatString: 0.0%
+		lineageTag: ea257e69-da0e-542f-9db0-b5100c47cf76
+		summarizeBy: none
+		sourceColumn: share_out_of_service
+
+		annotation SummarizationSetBy = User
+
+	column share_not_renting
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 1ea5ad0b-b0a2-5e95-b982-b9c34bdd62ce
+		summarizeBy: none
+		sourceColumn: share_not_renting
+
+		annotation SummarizationSetBy = User
+
+	partition fct_station_hourly = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "dublinflow"),
+				    analytics_fct_station_hourly = Source{[Schema="analytics", Item="fct_station_hourly"]}[Data]
+				in
+				    analytics_fct_station_hourly
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

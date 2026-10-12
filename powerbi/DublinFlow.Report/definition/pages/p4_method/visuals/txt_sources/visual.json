@@ -1,0 +1,67 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "name": "txt_sources",
+  "position": {
+    "x": 16,
+    "y": 248,
+    "z": 2,
+    "height": 150,
+    "width": 768,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Data sources",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "13pt"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Smart Dublin: Dublin Bikes station history, May 2024 to June 2026."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Dublin Bikes live station feed (GBFS), collected every 10 minutes by this project from 4 October 2026."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Met Éireann hourly weather, Dublin Airport station. Copyright Met Éireann. Source www.met.ie. Licensed under CC BY 4.0."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Pipeline: Python loaders, PostgreSQL, dbt models in schema analytics.",
+                    "textStyle": {
+                      "color": "#605E5C"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "DublinFlow"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cdc985cc-62e1-41da-bc90-ff408d8d65d5"
+  }
+}

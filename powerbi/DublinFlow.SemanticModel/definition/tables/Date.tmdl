@@ -1,0 +1,60 @@
+/// Calendar table (marked as the date table) for time intelligence: one row per day from 1 May 2024 to today.
+table Date
+	lineageTag: 7c55432e-cf0b-5320-8123-994d33fd4518
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: dd mmm yyyy
+		lineageTag: 9089bd67-1451-52cb-8b6b-0114fc7a9e2f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c3859309-79a2-5316-ae37-071572be8266
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = User
+
+	column Month
+		dataType: string
+		lineageTag: e710e720-aeab-59fc-b389-c7e4a14dbd34
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: 'Month Start'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Start'
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: 5dcacf06-2438-5311-aff8-6fe588481cd8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Start]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Date = calculated
+		mode: import
+		source =
+				ADDCOLUMNS(
+				    CALENDAR(DATE(2024, 5, 1), TODAY()),
+				    "Year", YEAR([Date]),
+				    "Month", FORMAT([Date], "mmm yyyy"),
+				    "Month Start", DATE(YEAR([Date]), MONTH([Date]), 1)
+				)
+

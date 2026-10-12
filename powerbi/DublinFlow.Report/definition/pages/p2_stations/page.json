@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "p2_stations",
+  "displayName": "Stations",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "station_slicer",
+      "target": "station_table",
+      "type": "NoFilter"
+    },
+    {
+      "source": "station_slicer",
+      "target": "card_best",
+      "type": "NoFilter"
+    },
+    {
+      "source": "station_slicer",
+      "target": "card_worst",
+      "type": "NoFilter"
+    }
+  ]
+}
