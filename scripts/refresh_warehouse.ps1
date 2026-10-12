@@ -6,8 +6,8 @@
 #   3. dbt build: rebuild all models and run all tests. Stops here if anything fails.
 #   4. dbt source freshness: warns if the live data is old (does not fail the run).
 #
-# Every run writes a log to logs\refresh\. The exit code is 0 on success and 1 on failure,
-# so Windows Task Scheduler shows failed runs.
+# Every run writes a log to logs\refresh\ and a one-line result to logs\refresh\last_status.txt
+# (OK or FAILED). The exit code is 0 on success and 1 on failure.
 #
 # Usage (from anywhere):
 #   powershell -NoProfile -ExecutionPolicy Bypass -File C:\dev\dublinflow\scripts\refresh_warehouse.ps1
@@ -82,6 +82,11 @@ try {
     Write-Log "STOPPED: $($_.Exception.Message). See $Log"
     $exitCode = 1
 }
+
+# One-line status of the latest run (handy when the task runs hidden).
+$status = if ($exitCode -eq 0) { 'OK' } else { 'FAILED' }
+Set-Content -Path (Join-Path $LogDir 'last_status.txt') -Encoding UTF8 `
+    -Value ("{0}  {1}  log: {2}" -f $status, (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), (Split-Path -Leaf $Log))
 
 # Keep the 30 most recent logs.
 Get-ChildItem $LogDir -Filter 'refresh_*.log' | Sort-Object LastWriteTime -Descending |
