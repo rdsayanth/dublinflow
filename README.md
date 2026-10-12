@@ -85,6 +85,16 @@ dotenv run -- dbt docs generate         # build the documentation site
 dotenv run -- dbt docs serve            # open it in the browser
 ```
 
+## Refreshing the data
+
+The live feed is collected automatically every 10 minutes by GitHub Actions. To bring it into the warehouse, run one script:
+
+```
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\refresh_warehouse.ps1
+```
+
+It loads new live snapshots, reloads the weather every 30 days (add `-Weather` to force it), runs `dbt build` (all models and tests) and `dbt source freshness`, and writes a log to `logs\refresh\`. It stops at the first failure and exits with code 1. Windows Task Scheduler runs it every morning. Then open `powerbi\DublinFlow.pbip` and click **Refresh**: Power BI Desktop cannot refresh on a schedule (that needs the Power BI service).
+
 ## Data sources and attribution
 
 - **Dublin Bikes live station feed (GBFS)**: station status and station information, collected every 10 minutes.
