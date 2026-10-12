@@ -1,35 +1,20 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "dbt_check_table",
   "position": {
     "x": 800,
     "y": 228,
     "z": 5,
-    "height": 472,
+    "height": 64,
     "width": 464,
     "tabOrder": 5
   },
   "visual": {
-    "visualType": "tableEx",
+    "visualType": "card",
     "query": {
       "queryState": {
         "Values": {
           "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_station"
-                    }
-                  },
-                  "Property": "station_name"
-                }
-              },
-              "queryRef": "dim_station.station_name",
-              "nativeQueryRef": "station_name",
-              "displayName": "Station"
-            },
             {
               "field": {
                 "Measure": {
@@ -38,49 +23,60 @@
                       "Entity": "fct_station_hourly"
                     }
                   },
-                  "Property": "dbt Mismatch"
+                  "Property": "dbt Mismatch List"
                 }
               },
-              "queryRef": "fct_station_hourly.dbt Mismatch",
-              "nativeQueryRef": "dbt Mismatch",
-              "displayName": "Difference (DAX - dbt)"
+              "queryRef": "fct_station_hourly.dbt Mismatch List",
+              "nativeQueryRef": "dbt Mismatch List"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "dim_station"
-                  }
-                },
-                "Property": "station_name"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
-    "visualContainerObjects": {
-      "title": [
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "11D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "fct_station_hourly"
+                        }
+                      },
+                      "Property": "dbt Check Colour"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Stations that do not match dbt (empty = all match)'"
+                  "Value": "false"
                 }
               }
             }

@@ -241,19 +241,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "dbt Mismatch"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Difference (DAX - dbt)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_hour.day_type": {
 			      "Definition": {

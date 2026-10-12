@@ -158,6 +158,28 @@ table fct_station_hourly
 		displayFolder: Measures
 		lineageTag: 05792840-5293-4185-a554-e1ea85518d9d
 
+	/// Text for the mismatch strip: lists stations that do not match dbt, or a pass message.
+	measure 'dbt Mismatch List' =
+			VAR Mismatched =
+			    FILTER(
+			        VALUES(dim_station[station_name]),
+			        VAR Diff = [dbt Score Check]
+			        RETURN NOT ISBLANK(Diff) && ABS(Diff) >= 0.05
+			    )
+			RETURN
+			    IF(
+			        ISEMPTY(Mismatched),
+			        "No mismatches: every station matches dbt",
+			        "Not matching: "
+			            & CONCATENATEX(
+			                Mismatched,
+			                dim_station[station_name] & " (" & FORMAT([dbt Score Check], "+0.0;-0.0") & ")",
+			                ", "
+			            )
+			    )
+		displayFolder: Measures
+		lineageTag: c303766e-79c5-4cc6-9e18-add1979bb44f
+
 	column station_id
 		dataType: int64
 		isHidden
