@@ -114,6 +114,6 @@ Columns: `snapshot_at_utc`, `station_id`, `bikes_available`, `docks_available`, 
 - **Times:** everything is stored in UTC. Local time only appears in `dim_hour`.
 - **Out of service:** a reading with 0 bikes and 0 free docks counts as out of service, not as empty or full.
 - **No forward-fill:** missing hours stay missing rather than being filled in.
-- **Tests:** dbt runs 41 tests on every build (unique keys, not null, relationships and the score range 0 to 100). See [data_quality.md](data_quality.md).
+- **Tests:** dbt runs 33 data tests on every build (unique keys, not null, relationships and the score range 0 to 100). See [data_quality.md](data_quality.md).
 
 Weather data: Copyright Met Éireann. Source: www.met.ie. Licence: CC BY 4.0.
