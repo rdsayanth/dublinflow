@@ -42,7 +42,7 @@ Empty % and full % are also reported separately.
 
 ## Power BI report
 
-A 4-page report in [`powerbi/`](powerbi/), saved as a Power BI Project (`.pbip`): the semantic model is plain-text TMDL and the report is PBIR JSON, so every change shows up as a readable git diff. Import mode, connected to the dbt `analytics` schema; 22 DAX measures in a Measures folder.
+A 4-page report in [`powerbi/`](powerbi/), saved as a Power BI Project (`.pbip`): the semantic model is plain-text TMDL and the report is PBIR JSON, so every change shows up as a readable git diff. Import mode, connected to the dbt `analytics` schema; 22 DAX measures in a Measures folder. Model, measures and design decisions: [docs/powerbi.md](docs/powerbi.md).
 
 **Overview:** score over time and a station map coloured by score.
 ![Overview page](docs/images/powerbi_overview.png)
