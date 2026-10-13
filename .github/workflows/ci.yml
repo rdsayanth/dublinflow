@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:          # manual button
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+
+      - name: Python tests
+        run: pytest -v
+
+      # Checks every dbt model, test and source compiles. No database is needed,
+      # so the connection settings are dummies (dbt parse never connects).
+      - name: dbt parse
+        run: dbt parse
+        env:
+          DBT_PROJECT_DIR: dbt
+          DBT_PROFILES_DIR: dbt
+          PGHOST: localhost
+          PGPORT: "5432"
+          PGDATABASE: ci
+          PGUSER: ci
+          PGPASSWORD: ci

@@ -1,5 +1,7 @@
 # DublinFlow: Dublin Bikes Reliability Data Platform
 
+[![CI](https://github.com/rdsayanth/dublinflow/actions/workflows/ci.yml/badge.svg)](https://github.com/rdsayanth/dublinflow/actions/workflows/ci.yml)
+
 > Work in progress. Done: live collection, raw data layer, 2 years of history and weather, a tested dbt star schema, SQL analysis, a Power BI report and a daily automated refresh.
 
 ## The question
@@ -76,7 +78,7 @@ Python 3.12 · requests · psycopg · PostgreSQL · dbt Core · GitHub Actions �
 ingestion/          Python collector, downloaders and loaders
 sql/                DDL and analysis queries
 dbt/                dbt project (models and tests)
-tests/              Python tests
+tests/              pytest tests for the collector and loaders (no network or database needed)
 powerbi/            Power BI Project (TMDL model, PBIR report)
 scripts/            Warehouse refresh script (load + dbt build), run daily by Task Scheduler
 docs/               Architecture, data quality, data dictionary, findings, screenshots
@@ -111,6 +113,15 @@ dotenv run -- dbt source freshness      # check the live data is recent
 dotenv run -- dbt docs generate         # build the documentation site
 dotenv run -- dbt docs serve            # open it in the browser
 ```
+
+## Running the tests
+
+```
+python -m pip install -r requirements-dev.txt
+pytest
+```
+
+The tests use small sample data and fakes, so they need no network, Azure or database. GitHub Actions ([`ci.yml`](.github/workflows/ci.yml)) runs them on every push, together with `dbt parse` to check that every dbt model, test and source compiles.
 
 ## Refreshing the data
 

@@ -1,0 +1,3 @@
+# Tools for development and CI only (not needed to run the pipeline)
+-r requirements.txt
+pytest==9.1.1
