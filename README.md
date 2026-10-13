@@ -1,6 +1,6 @@
 # DublinFlow: Dublin Bikes Reliability Data Platform
 
-> Work in progress. Phases 1 to 6 of 9 done: live collection, raw data layer, 2 years of history and weather, and a tested dbt star schema.
+> Work in progress. Done: live collection, raw data layer, 2 years of history and weather, a tested dbt star schema, SQL analysis, a Power BI report and a daily automated refresh.
 
 ## The question
 
