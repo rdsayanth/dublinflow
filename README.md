@@ -40,6 +40,32 @@ Tests check uniqueness, missing values and the links from the fact table to both
 `100 × (1 − share of time empty − share of time full)`, measured during service hours.
 Empty % and full % are also reported separately.
 
+## Power BI report
+
+A 4-page report in [`powerbi/`](powerbi/), saved as a Power BI Project (`.pbip`): the semantic model is plain-text TMDL and the report is PBIR JSON, so every change shows up as a readable git diff. Import mode, connected to the dbt `analytics` schema; 22 DAX measures in a Measures folder.
+
+**Overview:** score over time and a station map coloured by score.
+![Overview page](docs/images/powerbi_overview.png)
+
+**Stations:** every station ranked, best and worst station, and the share of time empty or full by hour of day.
+![Stations page](docs/images/powerbi_stations.png)
+
+**Time and weather:** hour × day heatmap, weekday vs weekend, and dry vs rain.
+![Time and weather page](docs/images/powerbi_time_weather.png)
+
+**Data and method:** how the score works, sources, known gaps, a data coverage chart, and a cross-check that recalculates every station's score in DAX and compares it with dbt's `mart_station_reliability` (115 of 115 match).
+![Data and method page](docs/images/powerbi_data_method.png)
+
+What it shows (May 2024 to Oct 2026, service hours):
+
+- The network scores **86.2**: stations are empty 10.5% of the time and full 3.2%.
+- **Weekday mornings are the hardest**: Monday and Tuesday at 09:00–10:00 score about 79. Around 07:00 and on Wednesday to Friday afternoons it is easiest (about 91).
+- At weekends the low point comes later: Sunday 10:00–13:00 scores 81–82.
+- **Rain makes it slightly easier** (88.0 in rain vs 86.0 dry), most likely because fewer people ride.
+- The best station is Fenian Street (98.1) and the worst is Hardwicke Place (57.2).
+
+To open it: install Power BI Desktop, open `powerbi/DublinFlow.pbip`, click **Refresh** and sign in to PostgreSQL with the user from your `.env`.
+
 ## Tech stack
 
 Python 3.12 · requests · psycopg · PostgreSQL · dbt Core · GitHub Actions · Azure Blob Storage · Power BI
@@ -51,8 +77,9 @@ ingestion/          Python collector, downloaders and loaders
 sql/                DDL and analysis queries
 dbt/                dbt project (models and tests)
 tests/              Python tests
-powerbi/            Power BI report and screenshots
-docs/               Architecture, data quality, data dictionary, findings
+powerbi/            Power BI Project (TMDL model, PBIR report)
+scripts/            Warehouse refresh script (load + dbt build), run daily by Task Scheduler
+docs/               Architecture, data quality, data dictionary, findings, screenshots
 .github/workflows/  GitHub Actions schedules
 ```
 
