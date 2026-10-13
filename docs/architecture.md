@@ -10,13 +10,16 @@ flowchart LR
         GHA --> BLOB[(Azure Blob Storage<br/>raw JSON)]
     end
     subgraph Local
+        TASK[Windows Task Scheduler<br/>daily 07:00<br/>refresh_warehouse.ps1] -.->|runs| LOADER
+        TASK -.->|runs| DBT
         BLOB --> LOADER[Python loader]
         HIST[Smart Dublin<br/>historical CSVs] --> LOADER
         MET[Met Éireann<br/>hourly weather] --> LOADER
         LOADER --> RAW[(PostgreSQL<br/>raw schema)]
         RAW --> DBT[dbt Core<br/>staging, intermediate, marts<br/>+ tests]
-        DBT --> SQL[SQL analysis<br/>Reliability Score]
-        SQL --> PBI[Power BI report]
+        DBT --> MARTS[(dbt marts<br/>analytics schema)]
+        MARTS --> PBI[Power BI report]
+        MARTS --> SQL[SQL analysis<br/>Reliability Score]
     end
 ```
 
@@ -34,7 +37,7 @@ flowchart LR
 ## Key data rules
 
 - Snapshots show **availability, not trips**. Any "activity" measured from changes between snapshots is a proxy, because rebalancing vans also move bikes.
-- Dublin Bikes timestamps are **UTC**. Met Éireann recent data is **Irish local time**. They are aligned carefully, including daylight saving changes.
+- Dublin Bikes timestamps and Met Éireann hourly weather are both **UTC**, so they join directly on the hour. Irish local time (with daylight saving) is only added in `dim_hour`, for hour-of-day and day-of-week analysis.
 - Weather comes from **one station** (Dublin Airport), so it is city-wide, not per bike station.
 - The feed's own timestamps are used, not the time the collector ran, because GitHub Actions schedules can be delayed.
 

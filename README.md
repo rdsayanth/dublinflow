@@ -59,9 +59,9 @@ A 4-page report in [`powerbi/`](powerbi/), saved as a Power BI Project (`.pbip`)
 What it shows (May 2024 to Oct 2026, service hours):
 
 - The network scores **86.2**: stations are empty 10.5% of the time and full 3.2%.
-- **Weekday mornings are the hardest**: Monday and Tuesday at 09:00–10:00 score about 79. Around 07:00 and on Wednesday to Friday afternoons it is easiest (about 91).
+- **Weekday commute peaks are the hardest**: Monday and Tuesday at 09:00–10:00 score about 79, and late evenings are just as low (Wednesday 23:00 is the lowest hour, 78.3). Around 07:00 and on Wednesday to Friday afternoons it is easiest (about 91).
 - At weekends the low point comes later: Sunday 10:00–13:00 scores 81–82.
-- **Rain makes it slightly easier** (88.0 in rain vs 86.0 dry), most likely because fewer people ride.
+- **Rainy hours score slightly higher** (88.0 vs 86.0 dry), most likely because fewer people ride (season not controlled for).
 - The best station is Fenian Street (98.1) and the worst is Hardwicke Place (57.2).
 
 To open it: install Power BI Desktop, open `powerbi/DublinFlow.pbip`, click **Refresh** and sign in to PostgreSQL with the user from your `.env`.
