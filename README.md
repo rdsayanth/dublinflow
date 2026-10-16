@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/rdsayanth/dublinflow/actions/workflows/ci.yml/badge.svg)](https://github.com/rdsayanth/dublinflow/actions/workflows/ci.yml)
 
-> Work in progress. Done: live collection, raw data layer, 2 years of history and weather, a tested dbt star schema, SQL analysis, a Power BI report and a daily automated refresh.
+>Status: complete. Live collection continues to run daily.
 
 ## The question
 
